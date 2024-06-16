@@ -101,3 +101,4 @@ C:\mine\C.net\Basic\Selenium\NUnit\TestProject1\obj\Debug\net8.0\refint\TestProj
 C:\mine\C.net\Basic\Selenium\NUnit\TestProject1\obj\Debug\net8.0\TestProject1.pdb
 C:\mine\C.net\Basic\Selenium\NUnit\TestProject1\obj\Debug\net8.0\TestProject1.genruntimeconfig.cache
 C:\mine\C.net\Basic\Selenium\NUnit\TestProject1\obj\Debug\net8.0\ref\TestProject1.dll
+C:\mine\C.net\Basic\Selenium\NUnit\TestProject1\obj\Debug\net8.0\TestProject1.sourcelink.json

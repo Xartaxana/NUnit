@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj": {}
+    "c:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj": {}
   },
   "projects": {
-    "C:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj": {
+    "c:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj",
+        "projectUniqueName": "c:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj",
         "projectName": "TestProject1",
-        "projectPath": "C:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj",
+        "projectPath": "c:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\TestProject1.csproj",
         "packagesPath": "C:\\Users\\Mariia_Lobashova\\.nuget\\packages\\",
-        "outputPath": "C:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\obj\\",
+        "outputPath": "c:\\mine\\C.net\\Basic\\Selenium\\NUnit\\TestProject1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mariia_Lobashova\\AppData\\Roaming\\NuGet\\NuGet.Config"
