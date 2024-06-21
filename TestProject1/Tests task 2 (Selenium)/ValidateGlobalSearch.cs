@@ -7,29 +7,22 @@ namespace TestProject1;
 
 public class ValidateGlobalSearch
 {
-    //[SetUp]
-    // public void SetUp()
-    // {
-    //     IWebDriver driver;
-    // }
+    public IWebDriver driver;
 
-    //     [TearDown]
-    // public void TearDown()
-    // {
-    //     driver.Quit();
-    // }
+    [SetUp]
+    public void SetUp()
+    {
+        driver = new ChromeDriver();
+    }
 
     [Test]
-
     [TestCase("Automation")]
     [TestCase("Cloud")]
     [TestCase("BLOCKCHAIN")]
     public void ValidateGlobalSearchTest( string keyWord)
     {
-        IWebDriver driver = new ChromeDriver();
 
-        try 
-        {
+
             driver.Url = "https://www.epam.com";
 
             var searchIcon = driver.FindElement(By.CssSelector("button.header-search__button"));
@@ -66,16 +59,16 @@ public class ValidateGlobalSearch
             Assert.That(resultItems.All(itemsWithText.Contains));
             //It would be more correct to look for "utomation" in the .search-results__description elements as well, 
             //but this is not in the task and with such an assertion the test will also not be green, so I did not write it.
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        finally
-        {
-            driver.Quit();
-        }
+
 
     } 
+
+    [TearDown]
+    public void TearDown()
+    {
+        //driver.Close(); // close the windows
+        driver.Quit(); // quit the driver and clsoe the windows
+        driver.Dispose(); // freeing resources
+    }
 
 }
