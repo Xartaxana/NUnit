@@ -1,42 +1,20 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
-namespace TestProject1;
+namespace TestProject1.Pages;
 
-public class ValidateCarouselArticle
+public class InsightsPage:BasicPage
 {
-    public IWebDriver driver;
-    WebDriverWait elementlWait;
+    public InsightsPage (IWebDriver driver) : base(driver) {}
 
-    [SetUp]
-    public void SetUp()
+public string SwipeCarouselAndOpenArticle (int counter)
     {
-        driver = new ChromeDriver();
-        driver.Manage().Window.Maximize(); 
-
-        elementlWait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+        var elementlWait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
         {
             PollingInterval = TimeSpan.FromSeconds(0.25),
             Message = "Search panel has not been found"
         };
-    }
-
-    [TestCase(2)]
-    [TestCase(3)]
-    [TestCase(4)]
-    [TestCase(5)]
-    [Test]
-    public void ValidateGlobalSearchTest(int counter)
-    {
-
-
-        driver.Url = "https://www.epam.com";
-
-
-        var careersLink = driver.FindElement(By.LinkText("Insights"));
-        careersLink.Click();
 
         //I have to remove the banner first
         var acceptCookies = elementlWait.Until(driver => driver.FindElement(By.Id("onetrust-accept-btn-handler")));
@@ -54,16 +32,6 @@ public class ValidateCarouselArticle
         elementlWait.Until(driver => ReadMoreArrow.Displayed);
         Thread.Sleep(2000);
         ReadMoreArrow.Click();
-        var ArticleNameOnPage = driver.FindElement(By.CssSelector("#main .museo-sans-light")).GetAttribute("innerText");
-        StringAssert.Contains(ArticleNameInCarousel.Remove(ArticleNameInCarousel.Length - 1), ArticleNameOnPage);
-
-    } 
-
-    [TearDown]
-    public void TearDown()
-    {
-        driver.Quit(); // quit the driver and clsoe the windows
-        driver.Dispose(); // freeing resources
+        return ArticleNameInCarousel;
     }
-
 }

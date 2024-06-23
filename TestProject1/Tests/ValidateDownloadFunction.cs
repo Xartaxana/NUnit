@@ -2,8 +2,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using TestProject1.Pages;
 
-namespace TestProject1;
+namespace TestProject1.Tests;
 
 public class ValidateDownloadFunction
 {
@@ -39,24 +40,12 @@ public class ValidateDownloadFunction
     [Test]
     public void ValidateGlobalSearchTest(string fileName)
     {
-        driver.Url = "https://www.epam.com";
+        var aboutPage = new AboutPage(driver);
+        aboutPage.OpenIndexPage();
+        aboutPage.OpenAbout();
+        aboutPage.DownloadCompanyOverviewFile();
 
-
-        var careersLink = driver.FindElement(By.LinkText("About"));
-        careersLink.Click();
-
-        var GlanceSection = driver.FindElement(By.XPath("//section[contains(., 'EPAM at')]"));
-        var DownloadButton = GlanceSection.FindElement(By.CssSelector(".button__inner"));
-
-
-        new Actions(driver)
-            .Pause(TimeSpan.FromSeconds(1))
-            .ScrollToElement(GlanceSection)
-            .Pause(TimeSpan.FromSeconds(1))
-            .Click(DownloadButton)
-            .Perform();
-
-        while (Directory.GetFiles(downloadDirectory).Count(i => i.EndsWith(".crdownload")) > 0)
+        while (Directory.GetFiles(downloadDirectory).Any(i => i.EndsWith(".crdownload")))
         {
             Thread.Sleep(2000);
         }
