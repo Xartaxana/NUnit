@@ -22,10 +22,11 @@ public class ValidateDownloadFunction
         options.AddUserProfilePreference("download.prompt_for_download", false);
         options.AddUserProfilePreference("download.directory_upgrade", true);
         options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
-        options.AddArgument("--headless=new");
+        //options.AddArgument("--headless=new");
+        options.AddArgument("--start-maximized");
 
         driver = new ChromeDriver(options);
-        driver.Manage().Window.Maximize(); 
+        //driver.Manage().Window.Maximize(); 
 
         elementlWait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
         {
@@ -41,8 +42,8 @@ public class ValidateDownloadFunction
     [Test]
     public void ValidateGlobalSearchTest(string fileName)
     {
-        var aboutPage = new AboutPage(driver);
-        aboutPage.OpenIndexPage();
+        var aboutPage = new AboutPage();
+        //aboutPage.OpenIndexPage();
         aboutPage.OpenAbout();
         aboutPage.DownloadCompanyOverviewFile();
 

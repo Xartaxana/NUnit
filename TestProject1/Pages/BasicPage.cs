@@ -2,76 +2,64 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using TestProject1.Core;
 
 namespace TestProject1.Pages;
 
 public class BasicPage
 {
-    public readonly IWebDriver driver;
-    private static string Url { get; } = "https://www.epam.com";
-
-    public BasicPage(IWebDriver driver) => this.driver = driver ?? throw new ArgumentException(nameof(driver));
-
-    public BasicPage OpenIndexPage()
+    public CarriersPage OpenCareers()
     {
-        driver.Url = Url;
-        return this;
-    }
-
-    public BasicPage OpenCareers()
-    {
-        var careersLink = driver.FindElement(By.LinkText("Careers"));
+        var careersLink = BrowserFactory.Driver.FindElement(By.LinkText("Careers"));
         careersLink.Click();
-        return this;
+        return  new CarriersPage();
     }
 
-    public BasicPage OpenInsights()
+    public InsightsPage OpenInsights()
     {
-        var careersLink = driver.FindElement(By.LinkText("Insights"));
-        careersLink.Click();
-        return this;
+        var insightsLinc = BrowserFactory.Driver.FindElement(By.LinkText("Insights"));
+        insightsLinc.Click();
+        return  new InsightsPage();
     }
 
-    public BasicPage OpenAbout()
+    public AboutPage OpenAbout()
     {
-        var careersLink = driver.FindElement(By.LinkText("About"));
-        careersLink.Click();
-        return this;
+        var aboutLink = BrowserFactory.Driver.FindElement(By.LinkText("About"));
+        aboutLink.Click();
+        return  new AboutPage();
     }
 
-    public IWebElement? Search(string keyWord)
+    public void Search(string keyWord)
     {
-        var elementlWait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+        var elementlWait = new WebDriverWait(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
         {
             PollingInterval = TimeSpan.FromSeconds(0.25),
             Message = "Search panel has not been found"
         };
         
-        var searchIcon = driver.FindElement(By.CssSelector("button.header-search__button"));
+        var searchIcon = BrowserFactory.Driver.FindElement(By.CssSelector("button.header-search__button"));
 
         searchIcon.Click();
 
-        var searchPanel = elementlWait.Until(driver => driver.FindElement(By.ClassName("header-search__panel")));
+        var searchPanel = elementlWait.Until(d => d.FindElement(By.ClassName("header-search__panel")));
         var searchInput = searchPanel.FindElement(By.Name("q"));
 
-        var clickAndSendKeysActions = new Actions(driver);
+        var clickAndSendKeysActions = new Actions(BrowserFactory.Driver);
 
         clickAndSendKeysActions.Click(searchInput)
-            .Pause(TimeSpan.FromSeconds(1))
+            .Pause(TimeSpan.FromSeconds(3))
             .SendKeys(keyWord)
+            .Pause(TimeSpan.FromSeconds(2))
             .Perform();
 
         var findButton = searchPanel.FindElement(By.XPath("//*[@class = 'search-results__action-section']/button"));
         findButton.Click();
-        var searchPage = elementlWait.Until(driver => driver.FindElement(By.ClassName("text")));
+        var searchPage = elementlWait.Until(d => d.FindElement(By.ClassName("text")));
         Assert.That(searchPage.Text, Is.EqualTo("Search"));
 
         //To see all the results we need to scroll down the page
-        driver.FindElement(By.TagName("body")).SendKeys(Keys.End); 
-        //var lastResult = elementlWait.Until(driver => driver.FindElement(By.CssSelector("article:nth-child(20)")));
+        BrowserFactory.Driver.FindElement(By.TagName("body")).SendKeys(Keys.End); 
 
-        var resultList = driver.FindElement(By.ClassName("search-results__items"));
-        return resultList;
     }
     
 }

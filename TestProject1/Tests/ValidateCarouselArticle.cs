@@ -24,8 +24,8 @@ public class ValidateCarouselArticle
     {
 
 
-        var insightsPage = new InsightsPage(driver);
-        insightsPage.OpenIndexPage();
+        var insightsPage = new InsightsPage();
+        //insightsPage.OpenIndexPage();
         insightsPage.OpenInsights();
         var ArticleNameInCarousel = insightsPage.SwipeCarouselAndOpenArticle(counter);
 

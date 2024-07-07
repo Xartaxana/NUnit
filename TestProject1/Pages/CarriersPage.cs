@@ -1,15 +1,16 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using TestProject1.Core;
 
 namespace TestProject1.Pages;
 
 public class CarriersPage:BasicPage
 {
-    public CarriersPage(IWebDriver driver) : base(driver) {}
+    // public CarriersPage(IWebDriver driver) : base(driver) {}
     public IWebElement? PositionSearch(string keyWord, string country)
     {
-        var elementlWait = new WebDriverWait(driver, TimeSpan.FromSeconds(30))
+        var elementlWait = new WebDriverWait(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
         {
             PollingInterval = TimeSpan.FromSeconds(0.25),
             Message = "Search panel has not been found"
@@ -21,14 +22,14 @@ public class CarriersPage:BasicPage
         var acceptCookies = elementlWait.Until(driver => driver.FindElement(By.Id("onetrust-accept-btn-handler")));
         acceptCookies.Click();
 
-        var clickAndSendKeysWord = new Actions(driver);
+        var clickAndSendKeysWord = new Actions(BrowserFactory.Driver);
         clickAndSendKeysWord
             .Pause(TimeSpan.FromSeconds(2))
             .Click(fieldKeywords)
             .SendKeys(keyWord)
             .Perform();
 
-        var locationFild = driver.FindElement(By.ClassName("recruiting-search__location"));
+        var locationFild = BrowserFactory.Driver.FindElement(By.ClassName("recruiting-search__location"));
         locationFild.Click();
 
         if (country == "All Locations")
@@ -39,19 +40,19 @@ public class CarriersPage:BasicPage
         }
         else
         {
-            var countryInput = driver.FindElement(By.CssSelector($"[aria-label = '{country}']"));
+            var countryInput = BrowserFactory.Driver.FindElement(By.CssSelector($"[aria-label = '{country}']"));
             elementlWait.Until(driver => countryInput.Displayed); //If the country's drop down has already been opened, it will close (as for Spain), this case must be handled separately
             countryInput.Click();
-            var cityInput = driver.FindElement(By.CssSelector($"[title= 'All Cities in {country}'][role='option']"));
+            var cityInput = BrowserFactory.Driver.FindElement(By.CssSelector($"[title= 'All Cities in {country}'][role='option']"));
             elementlWait.Until(driver => cityInput.Displayed);
             cityInput.Click();
         }
 
-        var remote = driver.FindElement(By.XPath("//input[@name = 'remote']/.. "));
+        var remote = BrowserFactory.Driver.FindElement(By.XPath("//input[@name = 'remote']/.. "));
         remote.Click();
-        var findButton = driver.FindElement(By.CssSelector("button[type = 'submit']"));
+        var findButton = BrowserFactory.Driver.FindElement(By.CssSelector("button[type = 'submit']"));
         findButton.Click();
-        var result = driver.FindElement(By.CssSelector(".search-result__list"));
+        var result = BrowserFactory.Driver.FindElement(By.CssSelector(".search-result__list"));
         elementlWait.Until(driver => result.Displayed);
         return result;
     }

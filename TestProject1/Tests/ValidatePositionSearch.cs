@@ -30,8 +30,8 @@ public class ValidatePositionSearch
     [Test]
     public void ValidatePositionSearchTest(string keyWord, string country)
     {
-        var carriersPage = new CarriersPage(driver);
-        carriersPage.OpenIndexPage();
+        var carriersPage = new CarriersPage();
+        //carriersPage.OpenIndexPage();
         carriersPage.OpenCareers();
         carriersPage.PositionSearch(keyWord, country);
 
