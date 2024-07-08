@@ -26,11 +26,15 @@ public class BaseTest
     [TearDown]
     public void TearDownForAllTests()
     {
-        
         if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-            {
-                ScreenshotMaker.TakeBrowserScreenshot(BrowserFactory.Driver);
-            }
+        {
+            logger.Log.Error("Test failed");
+            ScreenshotMaker.TakeBrowserScreenshot(BrowserFactory.Driver);
+        } else
+        {
+            logger.Log.Info("Test successful complete");
+        }
+        
     }
 
     [OneTimeTearDown]

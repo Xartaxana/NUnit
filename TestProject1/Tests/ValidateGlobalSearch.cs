@@ -12,7 +12,7 @@ public class ValidateGlobalSearch:BaseTest
     public void ValidateGlobalSearchTest( string keyWord)
     {
         var globalSearch = new GlobalSearch();
-        logger.Log.Info("Test " + keyWord);
+        logger.Log.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
         globalSearch.Search(keyWord);
         var resultItems =  globalSearch.GetSearchResults(); 
         var itemsWithText = globalSearch.GetSearchResultsWithKeyWord(keyWord);
