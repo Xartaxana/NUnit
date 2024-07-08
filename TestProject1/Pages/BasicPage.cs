@@ -8,6 +8,14 @@ namespace TestProject1.Pages;
 
 public class BasicPage
 {
+    private readonly By searchPanelLocator = By.ClassName("header-search__panel");
+    
+    protected readonly WebDriverWait elementlWait = new(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
+        {
+            PollingInterval = TimeSpan.FromSeconds(0.25),
+            Message = "Element has not been found"
+        };
+    
     public CarriersPage OpenCareers()
     {
         var careersLink = BrowserFactory.Driver.FindElement(By.LinkText("Careers"));
@@ -29,36 +37,31 @@ public class BasicPage
         return  new AboutPage();
     }
 
-    public void Search(string keyWord)
+    public void OpenSearchPanel()
     {
-        var elementlWait = new WebDriverWait(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
-        {
-            PollingInterval = TimeSpan.FromSeconds(0.25),
-            Message = "Search panel has not been found"
-        };
         
         var searchIcon = BrowserFactory.Driver.FindElement(By.CssSelector("button.header-search__button"));
-
         searchIcon.Click();
+        var searchPanel = elementlWait.Until(d => d.FindElement(searchPanelLocator));
+    }
 
-        var searchPanel = elementlWait.Until(d => d.FindElement(By.ClassName("header-search__panel")));
+    public void EnterSearchValue(string keyWord)
+    {
+        var searchPanel = BrowserFactory.Driver.FindElement(searchPanelLocator);
         var searchInput = searchPanel.FindElement(By.Name("q"));
-
         var clickAndSendKeysActions = new Actions(BrowserFactory.Driver);
-
         clickAndSendKeysActions.Click(searchInput)
-            .Pause(TimeSpan.FromSeconds(3))
+            .Pause(TimeSpan.FromSeconds(1))
             .SendKeys(keyWord)
-            .Pause(TimeSpan.FromSeconds(2))
             .Perform();
 
+    }
+    public void ClickFindButton()
+    {
+        var searchPanel = BrowserFactory.Driver.FindElement(searchPanelLocator);
         var findButton = searchPanel.FindElement(By.XPath("//*[@class = 'search-results__action-section']/button"));
         findButton.Click();
-        var searchPage = elementlWait.Until(d => d.FindElement(By.ClassName("text")));
-        Assert.That(searchPage.Text, Is.EqualTo("Search"));
-
-        //To see all the results we need to scroll down the page
-        BrowserFactory.Driver.FindElement(By.TagName("body")).SendKeys(Keys.End); 
+        var searchPage = elementlWait.Until(d => d.FindElement(By.ClassName("text"))).Text.Equals("Search");
 
     }
     

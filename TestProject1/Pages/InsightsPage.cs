@@ -10,12 +10,6 @@ public class InsightsPage:BasicPage
 
 public string SwipeCarouselAndOpenArticle (int counter)
     {
-        var elementlWait = new WebDriverWait(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
-        {
-            PollingInterval = TimeSpan.FromSeconds(0.25),
-            Message = "Search panel has not been found"
-        };
-
         //I have to remove the banner first
         var acceptCookies = elementlWait.Until(driver => driver.FindElement(By.Id("onetrust-accept-btn-handler")));
         acceptCookies.Click();

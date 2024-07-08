@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using OpenQA.Selenium.Support.Extensions;
+using TestProject1.Core;
 
 namespace TestProject1.Core;
      
@@ -21,8 +22,10 @@ public class ScreenshotMaker
     public static string TakeBrowserScreenshot(IWebDriver driver)
     {
         var screenshotPath = Path.Combine(Environment.CurrentDirectory, "Display" + NewScreenshotName);
+        // var size = BrowserFactory.Driver.FindElement(By.Id("main")).Size;
+        // driver.Manage().Window.Size = new Size(size.Width, size.Height);
         var image = driver.TakeScreenshot();
-        image.SaveAsFile(screenshotPath);
+        image.SaveAsFile(screenshotPath); 
         //((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(screenshotPath);
         return screenshotPath;
     }

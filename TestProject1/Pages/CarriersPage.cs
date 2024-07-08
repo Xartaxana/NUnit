@@ -9,13 +9,7 @@ public class CarriersPage:BasicPage
 {
     // public CarriersPage(IWebDriver driver) : base(driver) {}
     public IWebElement? PositionSearch(string keyWord, string country)
-    {
-        var elementlWait = new WebDriverWait(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
-        {
-            PollingInterval = TimeSpan.FromSeconds(0.25),
-            Message = "Search panel has not been found"
-        };
-        
+    {        
         var fieldKeywords = elementlWait.Until(driver => driver.FindElement(By.Id("new_form_job_search-keyword")));
 
         //I have to remove the banner first
