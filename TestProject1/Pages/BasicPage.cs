@@ -1,7 +1,6 @@
 using log4net;
 using log4net.Config;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using TestProject1.Core;
@@ -15,8 +14,7 @@ public class BasicPage
 
     public BasicPage()
     {
-     XmlConfigurator.Configure(new FileInfo("Log.config"));
-     logger =  LogManager.GetLogger(GetType());  
+     logger =  MyLogger.Logger;  
     }
     
     protected readonly WebDriverWait elementlWait = new(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
@@ -50,6 +48,7 @@ public class BasicPage
     {
         var acceptCookies = elementlWait.Until(d => d.FindElement(By.Id("onetrust-accept-btn-handler")));
         acceptCookies.Click();
+        elementlWait.Until(driver => !acceptCookies.Displayed);
     }
 
     public void OpenSearchPanel()

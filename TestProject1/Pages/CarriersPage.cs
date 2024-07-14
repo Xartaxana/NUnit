@@ -1,6 +1,5 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using TestProject1.Core;
 
 namespace TestProject1.Pages;
@@ -83,6 +82,7 @@ public class CarriersPage:BasicPage
         var viewButton = lastResult.FindElement(By.CssSelector(".search-result__item-controls a"));
         elementlWait.Until(driver => viewButton.Displayed);
         viewButton.Click();
+        Thread.Sleep(2000);
     }
 
 }

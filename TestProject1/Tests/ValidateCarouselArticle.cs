@@ -1,20 +1,10 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using TestProject1.Pages;
 
 namespace TestProject1.Tests;
 
-public class ValidateCarouselArticle
+public class ValidateCarouselArticle:BaseTest
 {
-    public IWebDriver driver;
-
-    [SetUp]
-    public void SetUp()
-    {
-        driver = new ChromeDriver();
-        driver.Manage().Window.Maximize(); 
-    }
-
+    
     [TestCase(2)]
     [TestCase(3)]
     [TestCase(4)]
@@ -22,23 +12,14 @@ public class ValidateCarouselArticle
     [Test]
     public void ValidateGlobalSearchTest(int counter)
     {
-
-
+        logger.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
+        Thread.Sleep(2000);//Without this wait, 2 log files are created
         var insightsPage = new InsightsPage();
-        //insightsPage.OpenIndexPage();
         insightsPage.OpenInsights();
-        var ArticleNameInCarousel = insightsPage.SwipeCarouselAndOpenArticle(counter);
-
-        var ArticleNameOnPage = driver.FindElement(By.CssSelector("#main .museo-sans-light")).GetAttribute("innerText");
+        insightsPage.SwipeFirstCarousel(counter);
+        var ArticleNameInCarousel = insightsPage.OpenArticleFromFirstCarousel();
+        var ArticleNameOnPage = insightsPage.GetArticleNameOnPage(); 
         StringAssert.Contains(ArticleNameInCarousel.Remove(ArticleNameInCarousel.Length - 1), ArticleNameOnPage);
-
     } 
-
-    [TearDown]
-    public void TearDown()
-    {
-        driver.Quit(); // quit the driver and clsoe the windows
-        driver.Dispose(); // freeing resources
-    }
 
 }

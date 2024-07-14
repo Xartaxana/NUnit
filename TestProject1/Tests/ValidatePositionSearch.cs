@@ -1,4 +1,4 @@
-using TestProject1.Pages;
+using TestProject1.Steps;
 
 namespace TestProject1.Tests;
 
@@ -12,15 +12,11 @@ public class ValidatePositionSearch:BaseTest
     [Test]
     public void ValidatePositionSearchTest(string keyWord, string country)
     {
-        var carriersPage = new CarriersPage();
+        var positionSearch = new PositionSearch();
+        Thread.Sleep(2000);//Without this wait, 2 log files are created
         logger.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
-        carriersPage.OpenCareers();
-        carriersPage.EnterSearchKeyWord(keyWord);
-        carriersPage.EnterLocationValue(country);
-        carriersPage.SetRemoteParameter();
-        carriersPage.ClickCarriersFindButton();
-        carriersPage.OpenLastSearchResult();
-        var resultPage = carriersPage.GetResultPageName();
+        positionSearch.Search(keyWord, country);
+        var resultPage = positionSearch.GetResultName();
         Assert.That(resultPage.Text, Does.Contain(keyWord)); //Assert is case sensitive
     }
 

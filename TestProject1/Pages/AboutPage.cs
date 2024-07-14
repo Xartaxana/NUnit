@@ -1,6 +1,5 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using TestProject1.Core;
 
 namespace TestProject1.Pages;
@@ -8,8 +7,9 @@ namespace TestProject1.Pages;
 public class AboutPage:BasicPage
 {
 
-public void DownloadCompanyOverviewFile()
+    public void DownloadCompanyOverviewFile()
     {
+        logger.Info("Downloading company overview file");
         var GlanceSection = BrowserFactory.Driver.FindElement(By.XPath("//section[contains(., 'EPAM at')]"));
         var DownloadButton = GlanceSection.FindElement(By.CssSelector(".button__inner"));
 
@@ -20,5 +20,11 @@ public void DownloadCompanyOverviewFile()
             .Pause(TimeSpan.FromSeconds(1))
             .Click(DownloadButton)
             .Perform();
+        
+        while (Directory.GetFiles(BrowserFactory.downloadDirectory).Any(i => i.EndsWith(".crdownload")))
+        {
+            Thread.Sleep(2000);
+        }
+
     }
 }

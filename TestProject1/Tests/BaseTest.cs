@@ -12,8 +12,8 @@ public class BaseTest
     [SetUp]
     public void SetUpForAllTests()
     {
-        XmlConfigurator.Configure(new FileInfo("Log.config"));
-        logger =  LogManager.GetLogger(GetType());
+
+        logger = MyLogger.Logger;  
         BrowserFactory.InitBrowser("Chrome");
         BrowserFactory.Driver.Url = "https://www.epam.com";
 

@@ -1,25 +1,31 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using TestProject1.Core;
 
 namespace TestProject1.Pages;
 
 public class InsightsPage:BasicPage
 {
+    private readonly By ArticleNameOnPageLocator = By.CssSelector("#main .museo-sans-light");
+    
 
-public string SwipeCarouselAndOpenArticle (int counter)
+    public string GetArticleNameOnPage() 
+    {
+        return BrowserFactory.Driver.FindElement(ArticleNameOnPageLocator).GetAttribute("innerText");
+    }
+    public void SwipeFirstCarousel (int counter)
     {
         //I have to remove the banner first
-        var acceptCookies = elementlWait.Until(driver => driver.FindElement(By.Id("onetrust-accept-btn-handler")));
-        acceptCookies.Click();
+        RemoveCookiesBanner();
 
         var CarouselButton = BrowserFactory.Driver.FindElement(By.CssSelector(".slider__right-arrow.slider-navigation-arrow"));
-        elementlWait.Until(driver => !acceptCookies.Displayed);
         for (int i = 0; i < counter; i++)
         {
             CarouselButton.Click();    
         }
+    }
+
+    public string OpenArticleFromFirstCarousel ()
+    {
 
         var ArticleNameInCarousel = BrowserFactory.Driver.FindElement(By.CssSelector(".owl-item.active .text .museo-sans-light")).GetAttribute("innerText");
         var ReadMoreArrow = BrowserFactory.Driver.FindElement(By.CssSelector(".owl-item.active .svg-link-arrow"));

@@ -2,8 +2,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
-using System;
-using System.Collections.Generic;
 
 namespace TestProject1.Core
 {
@@ -11,6 +9,7 @@ namespace TestProject1.Core
     {
         private static readonly IDictionary<string, IWebDriver> Drivers = new Dictionary<string, IWebDriver>();
         private static IWebDriver? driver;
+        public static string downloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Downloads");
 
         public static IWebDriver Driver
         {
@@ -49,7 +48,6 @@ namespace TestProject1.Core
                 case "Chrome":
                     if (driver == null)
                     {
-                        var downloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Downloads");
 						Directory.CreateDirectory(downloadDirectory);
 						var options = new ChromeOptions();
 						options.AddUserProfilePreference("download.default_directory", downloadDirectory);

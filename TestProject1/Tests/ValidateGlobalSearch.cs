@@ -12,6 +12,7 @@ public class ValidateGlobalSearch:BaseTest
     public void ValidateGlobalSearchTest( string keyWord)
     {
         var globalSearch = new GlobalSearch();
+        Thread.Sleep(2000);//Without this wait, 2 log files are created
         logger.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
         globalSearch.Search(keyWord);
         logger.Info($"Checking for {keyWord} in all result titles");
