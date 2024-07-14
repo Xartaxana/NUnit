@@ -24,9 +24,9 @@ public class ScreenshotMaker
         var screenshotPath = Path.Combine(Environment.CurrentDirectory, "Display" + NewScreenshotName);
         // var size = BrowserFactory.Driver.FindElement(By.Id("main")).Size;
         // driver.Manage().Window.Size = new Size(size.Width, size.Height);
+        //((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(screenshotPath);
         var image = driver.TakeScreenshot();
         image.SaveAsFile(screenshotPath); 
-        //((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(screenshotPath);
         return screenshotPath;
     }
 } 

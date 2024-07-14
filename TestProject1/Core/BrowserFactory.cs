@@ -57,7 +57,7 @@ namespace TestProject1.Core
 						options.AddUserProfilePreference("download.directory_upgrade", true);
 						options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
 						//options.AddArgument("--headless=new");
-						//options.AddArgument("--start-maximized");
+						options.AddArgument("--start-maximized");
 						driver = new ChromeDriver(options);
                         Drivers.Add("Chrome", Driver);
                     }

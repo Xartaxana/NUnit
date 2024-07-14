@@ -1,23 +1,19 @@
 using log4net;
 using log4net.Config;
 using NUnit.Framework.Interfaces;
-using NUnit.Framework.Internal;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using TestProject1.Pages;
 using TestProject1.Core;
 
 namespace TestProject1.Tests;
 
 public class BaseTest
 {
-    public MyLogger logger;
+    public ILog logger;
 
     [SetUp]
     public void SetUpForAllTests()
     {
         XmlConfigurator.Configure(new FileInfo("Log.config"));
-        logger = new MyLogger();
+        logger =  LogManager.GetLogger(GetType());
         BrowserFactory.InitBrowser("Chrome");
         BrowserFactory.Driver.Url = "https://www.epam.com";
 
@@ -28,11 +24,11 @@ public class BaseTest
     {
         if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
         {
-            logger.Log.Error("Test failed");
+            logger.Error("Test failed");
             ScreenshotMaker.TakeBrowserScreenshot(BrowserFactory.Driver);
         } else
         {
-            logger.Log.Info("Test successful complete");
+            logger.Info("Test successful complete");
         }
         
     }

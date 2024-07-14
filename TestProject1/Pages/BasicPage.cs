@@ -1,3 +1,5 @@
+using log4net;
+using log4net.Config;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
@@ -9,6 +11,13 @@ namespace TestProject1.Pages;
 public class BasicPage
 {
     private readonly By searchPanelLocator = By.ClassName("header-search__panel");
+    public ILog logger;
+
+    public BasicPage()
+    {
+     XmlConfigurator.Configure(new FileInfo("Log.config"));
+     logger =  LogManager.GetLogger(GetType());  
+    }
     
     protected readonly WebDriverWait elementlWait = new(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
         {
@@ -37,9 +46,15 @@ public class BasicPage
         return  new AboutPage();
     }
 
+    public void RemoveCookiesBanner()
+    {
+        var acceptCookies = elementlWait.Until(d => d.FindElement(By.Id("onetrust-accept-btn-handler")));
+        acceptCookies.Click();
+    }
+
     public void OpenSearchPanel()
     {
-        
+        logger.Info("Opening search panel");
         var searchIcon = BrowserFactory.Driver.FindElement(By.CssSelector("button.header-search__button"));
         searchIcon.Click();
         var searchPanel = elementlWait.Until(d => d.FindElement(searchPanelLocator));
@@ -47,17 +62,20 @@ public class BasicPage
 
     public void EnterSearchValue(string keyWord)
     {
+        logger.Info("Entering search value");
         var searchPanel = BrowserFactory.Driver.FindElement(searchPanelLocator);
         var searchInput = searchPanel.FindElement(By.Name("q"));
         var clickAndSendKeysActions = new Actions(BrowserFactory.Driver);
         clickAndSendKeysActions.Click(searchInput)
-            .Pause(TimeSpan.FromSeconds(1))
+            .Pause(TimeSpan.FromSeconds(2))
             .SendKeys(keyWord)
+            .Pause(TimeSpan.FromSeconds(1))
             .Perform();
 
     }
     public void ClickFindButton()
     {
+        logger.Info("Click find button");
         var searchPanel = BrowserFactory.Driver.FindElement(searchPanelLocator);
         var findButton = searchPanel.FindElement(By.XPath("//*[@class = 'search-results__action-section']/button"));
         findButton.Click();

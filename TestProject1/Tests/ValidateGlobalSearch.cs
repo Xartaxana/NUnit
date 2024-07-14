@@ -12,8 +12,9 @@ public class ValidateGlobalSearch:BaseTest
     public void ValidateGlobalSearchTest( string keyWord)
     {
         var globalSearch = new GlobalSearch();
-        logger.Log.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
+        logger.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
         globalSearch.Search(keyWord);
+        logger.Info($"Checking for {keyWord} in all result titles");
         var resultItems =  globalSearch.GetSearchResults(); 
         var itemsWithText = globalSearch.GetSearchResultsWithKeyWord(keyWord);
         Assert.That(resultItems.All(itemsWithText.Contains), $"Total search results: {resultItems.Count}, results containing keyword: {itemsWithText.Count}");
