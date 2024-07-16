@@ -11,8 +11,11 @@ public static class MyLogger
         get 
         {
             if (logger == null)
+            {
                 XmlConfigurator.Configure(new FileInfo("Log.config"));
                 logger = LogManager.GetLogger("my_log");
+            }
+                
             return logger;
         }
     }

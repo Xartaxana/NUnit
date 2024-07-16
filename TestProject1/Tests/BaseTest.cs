@@ -1,5 +1,4 @@
 using log4net;
-using log4net.Config;
 using NUnit.Framework.Interfaces;
 using TestProject1.Core;
 
@@ -9,14 +8,20 @@ public class BaseTest
 {
     public ILog logger;
 
+    [OneTimeSetUp]
+    public void SetUpBeforeAllTests()
+    {
+
+        logger =  MyLogger.Logger; 
+        BrowserFactory.InitBrowser("Chrome");
+
+    }
+
     [SetUp]
     public void SetUpForAllTests()
     {
-
-        logger = MyLogger.Logger;  
-        BrowserFactory.InitBrowser("Chrome");
         BrowserFactory.Driver.Url = "https://www.epam.com";
-
+        logger.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
     }
 
     [TearDown]

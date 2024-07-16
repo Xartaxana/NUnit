@@ -1,5 +1,4 @@
 using log4net;
-using log4net.Config;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -66,9 +65,9 @@ public class BasicPage
         var searchInput = searchPanel.FindElement(By.Name("q"));
         var clickAndSendKeysActions = new Actions(BrowserFactory.Driver);
         clickAndSendKeysActions.Click(searchInput)
-            .Pause(TimeSpan.FromSeconds(2))
+            .Pause(TimeSpan.FromSeconds(3))
             .SendKeys(keyWord)
-            .Pause(TimeSpan.FromSeconds(1))
+            .Pause(TimeSpan.FromSeconds(2))
             .Perform();
 
     }
