@@ -10,10 +10,12 @@ public class BasicPage
 {
     private readonly By searchPanelLocator = By.ClassName("header-search__panel");
     public ILog logger;
+    public IWebDriver driver;
 
-    public BasicPage()
+    public BasicPage(IWebDriver driver)
     {
-     logger =  MyLogger.Logger;  
+     logger =  MyLogger.Logger;
+     this.driver = driver;  
     }
     
     protected readonly WebDriverWait elementlWait = new(BrowserFactory.Driver, TimeSpan.FromSeconds(30))
@@ -24,23 +26,23 @@ public class BasicPage
     
     public CarriersPage OpenCareers()
     {
-        var careersLink = BrowserFactory.Driver.FindElement(By.LinkText("Careers"));
+        var careersLink = driver.FindElement(By.LinkText("Careers"));
         careersLink.Click();
-        return  new CarriersPage();
+        return  new CarriersPage(driver);
     }
 
     public InsightsPage OpenInsights()
     {
-        var insightsLinc = BrowserFactory.Driver.FindElement(By.LinkText("Insights"));
+        var insightsLinc = driver.FindElement(By.LinkText("Insights"));
         insightsLinc.Click();
-        return  new InsightsPage();
+        return  new InsightsPage(driver);
     }
 
     public AboutPage OpenAbout()
     {
-        var aboutLink = BrowserFactory.Driver.FindElement(By.LinkText("About"));
+        var aboutLink = driver.FindElement(By.LinkText("About"));
         aboutLink.Click();
-        return  new AboutPage();
+        return  new AboutPage(driver);
     }
 
     public void RemoveCookiesBanner()
@@ -53,7 +55,7 @@ public class BasicPage
     public void OpenSearchPanel()
     {
         logger.Info("Opening search panel");
-        var searchIcon = BrowserFactory.Driver.FindElement(By.CssSelector("button.header-search__button"));
+        var searchIcon = driver.FindElement(By.CssSelector("button.header-search__button"));
         searchIcon.Click();
         var searchPanel = elementlWait.Until(d => d.FindElement(searchPanelLocator));
     }
@@ -61,9 +63,9 @@ public class BasicPage
     public void EnterSearchValue(string keyWord)
     {
         logger.Info("Entering search value");
-        var searchPanel = BrowserFactory.Driver.FindElement(searchPanelLocator);
+        var searchPanel = driver.FindElement(searchPanelLocator);
         var searchInput = searchPanel.FindElement(By.Name("q"));
-        var clickAndSendKeysActions = new Actions(BrowserFactory.Driver);
+        var clickAndSendKeysActions = new Actions(driver);
         clickAndSendKeysActions.Click(searchInput)
             .Pause(TimeSpan.FromSeconds(3))
             .SendKeys(keyWord)
@@ -74,7 +76,7 @@ public class BasicPage
     public void ClickFindButton()
     {
         logger.Info("Click find button");
-        var searchPanel = BrowserFactory.Driver.FindElement(searchPanelLocator);
+        var searchPanel = driver.FindElement(searchPanelLocator);
         var findButton = searchPanel.FindElement(By.XPath("//*[@class = 'search-results__action-section']/button"));
         findButton.Click();
         var searchPage = elementlWait.Until(d => d.FindElement(By.ClassName("text"))).Text.Equals("Search");

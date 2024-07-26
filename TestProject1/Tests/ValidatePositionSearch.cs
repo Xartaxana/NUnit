@@ -10,7 +10,7 @@ public class ValidatePositionSearch:BaseTest
     [TestCase("JavaScript", "All Locations")]
     public void ValidatePositionSearchTest(string keyWord, string country)
     {
-        var positionSearch = new PositionSearch();
+        var positionSearch = new PositionSearch(driver);
         positionSearch.Search(keyWord, country);
         var resultPage = positionSearch.GetResultName();
         Assert.That(resultPage.Text, Does.Contain(keyWord)); //Assert is case sensitive

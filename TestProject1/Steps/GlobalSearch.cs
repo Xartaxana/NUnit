@@ -4,25 +4,31 @@ using TestProject1.Pages;
 
 namespace TestProject1.Steps;
 
-public class GlobalSearch
+public class GlobalSearch(IWebDriver driver)
 {
+    private SearchPage? searchPage;
+    private IWebDriver driver = driver;
 
-    readonly SearchPage searchPage = new();
+    private SearchPage OnSearchPage() {
+        searchPage ??= new SearchPage(driver);
+        return searchPage;
+    }
+
     public void Search(string keyWord)
     {
-        searchPage.OpenSearchPanel();
-        searchPage.EnterSearchValue(keyWord);
-        searchPage.ClickFindButton();
+        OnSearchPage().OpenSearchPanel();
+        OnSearchPage().EnterSearchValue(keyWord);
+        OnSearchPage().ClickFindButton();
     }
 
     public ReadOnlyCollection<IWebElement> GetSearchResults()
     {
-        return searchPage.GetResultItems();
+        return OnSearchPage().GetResultItems();
     }
 
     public ReadOnlyCollection<IWebElement> GetSearchResultsWithKeyWord(string keyWord)
     {
-        return searchPage.GetResultItemsWithText(keyWord);
+        return OnSearchPage().GetResultItemsWithText(keyWord);
     }
 
 }

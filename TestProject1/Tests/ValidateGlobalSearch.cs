@@ -10,7 +10,7 @@ public class ValidateGlobalSearch:BaseTest
     [TestCase("BLOCKCHAIN")]
     public void ValidateGlobalSearchTest( string keyWord)
     {
-        var globalSearch = new GlobalSearch();
+        var globalSearch = new GlobalSearch(driver);
         globalSearch.Search(keyWord);
         logger.Info($"Checking for {keyWord} in all result titles");
         var resultItems =  globalSearch.GetSearchResults(); 

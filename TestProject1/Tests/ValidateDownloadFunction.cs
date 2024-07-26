@@ -10,9 +10,9 @@ public class ValidateDownloadFunction:BaseTest
     [TestCase("EPAM_Corporate_Overview_Q3.pdf")]
     [TestCase("EPAM_Corporate_Overview_Q2.pdf")]
     [TestCase("EPAM_Corporate_Overview_Q1.pdf")]
-    public void ValidateGlobalSearchTest(string fileName)
+    public void ValidateDownloadFunctionTest(string fileName)
     {
-        var aboutPage = new AboutPage();
+        var aboutPage = new AboutPage(driver);
         aboutPage.OpenAbout();
         aboutPage.DownloadCompanyOverviewFile();
 

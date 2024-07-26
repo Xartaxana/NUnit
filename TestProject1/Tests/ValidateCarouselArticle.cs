@@ -9,9 +9,9 @@ public class ValidateCarouselArticle:BaseTest
     [TestCase(3)]
     [TestCase(4)]
     [TestCase(5)]
-    public void ValidateGlobalSearchTest(int counter)
+    public void ValidateCarouselArticleTest(int counter)
     {
-        var insightsPage = new InsightsPage();
+        var insightsPage = new InsightsPage(driver);
         insightsPage.OpenInsights();
         insightsPage.SwipeFirstCarousel(counter);
         var ArticleNameInCarousel = insightsPage.OpenArticleFromFirstCarousel();

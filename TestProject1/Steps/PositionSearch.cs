@@ -3,22 +3,27 @@ using TestProject1.Pages;
 
 namespace TestProject1.Steps;
 
-public class PositionSearch
+public class PositionSearch(IWebDriver driver)
 {
+    private CarriersPage? carriersPage;
+    private IWebDriver driver = driver;
 
-    readonly CarriersPage carriersPage = new();
+    private CarriersPage OnCarriersPage() {
+        carriersPage ??= new CarriersPage(driver);
+        return carriersPage;
+    }
     public void Search(string keyWord, string country)
     {
-        carriersPage.OpenCareers();
-        carriersPage.EnterSearchKeyWord(keyWord);
-        carriersPage.EnterLocationValue(country);
-        carriersPage.SetRemoteParameter();
-        carriersPage.ClickCarriersFindButton();
-        carriersPage.OpenLastSearchResult();
+        OnCarriersPage().OpenCareers();
+        OnCarriersPage().EnterSearchKeyWord(keyWord);
+        OnCarriersPage().EnterLocationValue(country);
+        OnCarriersPage().SetRemoteParameter();
+        OnCarriersPage().ClickCarriersFindButton();
+        OnCarriersPage().OpenLastSearchResult();
     }
     
     public IWebElement GetResultName()
     {
-        return carriersPage.GetResultPageName();
+        return OnCarriersPage().GetResultPageName();
     }
 }

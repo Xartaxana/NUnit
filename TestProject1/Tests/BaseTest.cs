@@ -1,5 +1,6 @@
 using log4net;
 using NUnit.Framework.Interfaces;
+using OpenQA.Selenium;
 using TestProject1.Core;
 
 namespace TestProject1.Tests;
@@ -7,6 +8,7 @@ namespace TestProject1.Tests;
 public class BaseTest
 {
     public ILog logger;
+    public IWebDriver driver;
 
     [OneTimeSetUp]
     public void SetUpBeforeAllTests()
@@ -14,13 +16,14 @@ public class BaseTest
 
         logger =  MyLogger.Logger; 
         BrowserFactory.InitBrowser("Chrome");
+        driver = BrowserFactory.Driver;
 
     }
 
     [SetUp]
     public void SetUpForAllTests()
     {
-        BrowserFactory.Driver.Url = "https://www.epam.com";
+        driver.Url = "https://www.epam.com";
         logger.Info("Test " + TestContext.CurrentContext.Test.Name + " was started");
     }
 

@@ -4,17 +4,16 @@ using TestProject1.Core;
 
 namespace TestProject1.Pages;
 
-public class AboutPage:BasicPage
+public class AboutPage(IWebDriver driver) : BasicPage(driver)
 {
-
     public void DownloadCompanyOverviewFile()
     {
         logger.Info("Downloading company overview file");
-        var GlanceSection = BrowserFactory.Driver.FindElement(By.XPath("//section[contains(., 'EPAM at')]"));
+        var GlanceSection = driver.FindElement(By.XPath("//section[contains(., 'EPAM at')]"));
         var DownloadButton = GlanceSection.FindElement(By.CssSelector(".button__inner"));
 
 
-        new Actions(BrowserFactory.Driver)
+        new Actions(driver)
             .Pause(TimeSpan.FromSeconds(1))
             .ScrollToElement(GlanceSection)
             .Pause(TimeSpan.FromSeconds(1))
