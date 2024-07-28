@@ -15,5 +15,4 @@ public class ValidatePositionSearch:BaseTest
         var resultPage = positionSearch.GetResultName();
         Assert.That(resultPage.Text, Does.Contain(keyWord)); //Assert is case sensitive
     }
-
 }

@@ -47,9 +47,17 @@ public class BasicPage
 
     public void RemoveCookiesBanner()
     {
-        var acceptCookies = elementlWait.Until(d => d.FindElement(By.Id("onetrust-accept-btn-handler")));
-        acceptCookies.Click();
-        elementlWait.Until(driver => !acceptCookies.Displayed);
+        try
+        {
+            var acceptCookies = driver.FindElement(By.Id("onetrust-accept-btn-handler"));
+            acceptCookies.Click();
+            elementlWait.Until(driver => !acceptCookies.Displayed);
+        }
+        catch (NoSuchElementException)
+        {
+            Console.WriteLine("Cookies banner not displayed");
+        }
+        
     }
 
     public void OpenSearchPanel()

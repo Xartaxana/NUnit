@@ -5,11 +5,11 @@ using OpenQA.Selenium.IE;
 
 namespace TestProject1.Core
 {
-    class BrowserFactory
+    public class BrowserFactory
     {
         private static readonly IDictionary<string, IWebDriver> Drivers = new Dictionary<string, IWebDriver>();
         private static IWebDriver? driver;
-        public static string downloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Downloads");
+        public static readonly string downloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Downloads");
 
         public static IWebDriver Driver
         {

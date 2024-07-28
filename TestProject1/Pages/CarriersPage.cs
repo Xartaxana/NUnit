@@ -4,10 +4,9 @@ using OpenQA.Selenium.Interactions;
 namespace TestProject1.Pages;
 
 public class CarriersPage(IWebDriver driver) : BasicPage(driver)
-{
+{   
     private readonly By resultPageNameLocator = By.TagName("article");
     
-
     public IWebElement GetResultPageName() 
     {
         return driver.FindElement(resultPageNameLocator);
