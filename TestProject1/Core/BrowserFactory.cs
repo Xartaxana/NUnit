@@ -69,6 +69,8 @@ namespace TestProject1.Core
             {
                 Drivers[key].Quit();
 				Drivers[key].Dispose();
+                Drivers.Clear();
+                driver = null;
             }
         }
     }

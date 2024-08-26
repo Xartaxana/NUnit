@@ -17,7 +17,6 @@ public class BaseTest
         logger =  MyLogger.Logger; 
         BrowserFactory.InitBrowser("Chrome");
         driver = BrowserFactory.Driver;
-
     }
 
     [SetUp]

@@ -47,9 +47,13 @@ public class BasicPage
 
     public void RemoveCookiesBanner()
     {
-        var acceptCookies = elementlWait.Until(d => d.FindElement(By.Id("onetrust-accept-btn-handler")));
-        acceptCookies.Click();
-        elementlWait.Until(driver => !acceptCookies.Displayed);
+        try 
+        {
+            var acceptCookies = elementlWait.Until(d => d.FindElement(By.Id("onetrust-accept-btn-handler")));
+            acceptCookies.Click();
+            elementlWait.Until(driver => !acceptCookies.Displayed);
+        }
+        catch(WebDriverTimeoutException) { }
     }
 
     public void OpenSearchPanel()
