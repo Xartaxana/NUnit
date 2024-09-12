@@ -44,6 +44,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@3
+  displayName: UI tests
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -52,9 +53,10 @@ steps:
       **\bin\**\*TestProject1.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'Category!=API'
-    diagnosticsEnabled: true
 
 - task: VSTest@3
+  displayName: API tests
+  condition: succeededOrFailed()
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -63,8 +65,7 @@ steps:
       **\bin\**\*TestProject1.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'Category=API'
-    diagnosticsEnabled: true
-    continueOnError: true
+
 
 
 - task: PublishTestResults@2
