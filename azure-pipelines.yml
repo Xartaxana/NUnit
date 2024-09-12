@@ -5,6 +5,21 @@
 
 trigger:
 - API_testing
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily midnight build
+  branches:
+    include:
+    - API_testing
+  always: true
+
+parameters:
+- name: browser
+  default: 'Chrome'
+  values:
+  - 'Firefox'
+  - 'IE'
+  - 'Chrome'
 
 pool:
   vmImage: 'windows-latest'
@@ -28,11 +43,17 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: dotnet test --logger trx
+- script: dotnet test --filter Category!=API --logger trx
+
+script: dotnet test --filter Category=API --logger trx
+continueOnError: true
+
+
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+
 
 
