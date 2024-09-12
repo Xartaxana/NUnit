@@ -54,12 +54,25 @@ steps:
     testFiltercriteria: 'Category!=API'
     diagnosticsEnabled: true
 
+- task: VSTest@3
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\bin\**\*test.dll
+      **\bin\**\*tests.dll
+      **\bin\**\*TestProject1.dll
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'Category=API'
+    diagnosticsEnabled: true
+    continueOnError: true
+
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+    publishRunAttachments: true
 
 
 
