@@ -43,10 +43,16 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- script: dotnet test --filter Category!=API --logger trx
-
-script: dotnet test --filter Category=API --logger trx
-continueOnError: true
+- task: VSTest@3
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\bin\**\*test.dll
+      **\bin\**\*tests.dll
+      **\bin\**\*TestProject1.dll
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'Category!=API'
+    diagnosticsEnabled: true
 
 
 - task: PublishTestResults@2
