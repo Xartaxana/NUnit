@@ -44,25 +44,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@3
-  displayName: UI tests
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\bin\**\*test.dll
-      **\bin\**\*tests.dll
-      **\bin\**\*TestProject1.dll
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    testFiltercriteria: 'Category!=API'
-
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Screenshots'
-  condition: failed()
-  inputs:
-      artifactName: '**\bin\**\Display*'
-      targetPath: '$(System.DefaultWorkingDirectory)'
-- task: VSTest@3
   displayName: API tests
-  condition: succeededOrFailed()
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -72,18 +54,14 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'Category=API'
 
-- task: PublishTestResults@2
+- task: VSTest@3
+  displayName: UI tests
   condition: succeededOrFailed()
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-    publishRunAttachments: true
-
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFormat: 'NUnit'
-    testResultsFiles: '**/TEST-*.xml'
-    failTaskOnFailureToPublishResults: true
-    publishRunAttachments: true
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\bin\**\*test.dll
+      **\bin\**\*tests.dll
+      **\bin\**\*TestProject1.dll
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'Category!=API'

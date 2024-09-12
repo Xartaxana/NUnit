@@ -26,7 +26,8 @@ public class ScreenshotMaker
         // driver.Manage().Window.Size = new Size(size.Width, size.Height);
         //((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(screenshotPath);
         var image = driver.TakeScreenshot();
-        image.SaveAsFile(screenshotPath); 
+        image.SaveAsFile(screenshotPath);
+        TestContext.AddTestAttachment(screenshotPath);
         return screenshotPath;
     }
 } 
