@@ -54,6 +54,12 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'Category!=API'
 
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Screenshots'
+  condition: failed()
+  inputs:
+      artifactName: '**\bin\**\Display*'
+      targetPath: '$(System.DefaultWorkingDirectory)'
 - task: VSTest@3
   displayName: API tests
   condition: succeededOrFailed()
@@ -66,8 +72,6 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testFiltercriteria: 'Category=API'
 
-
-
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
@@ -76,4 +80,10 @@ steps:
     publishRunAttachments: true
 
 
-
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    failTaskOnFailureToPublishResults: true
+    publishRunAttachments: true
