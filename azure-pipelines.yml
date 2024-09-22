@@ -6,13 +6,13 @@
 
 trigger:
 - API_testing
-schedules:
-- cron: '0 0 * * *'
-  displayName: Daily midnight build
-  branches:
-    include:
-    - API_testing
-  always: true
+# schedules:
+# - cron: '0 0 * * *'
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#     - API_testing
+#   always: true
 
 parameters:
 - name: browser
